@@ -4,7 +4,11 @@ export default {
     }),
 
     getters: {
-        //
+        lastVideoName: (state) => {
+            if (state.videos.length > 0)
+                return state.videos[state.videos.length - 1].name
+            else return null
+        },
     },
 
     mutations: {
@@ -14,9 +18,12 @@ export default {
     },
 
     actions: {
-        getHighlights({ commit }) {
+        getHighlights({ commit, getters }) {
             let videos = []
             let endpoint = `https://www.reddit.com/r/nba/search.json?q=flair%3AHighlight&restrict_sr=on&sort=new&t=all&limit=20`
+
+            if (getters.lastVideoName)
+                endpoint += `&after=${getters.lastVideoName}`
 
             fetch(endpoint)
                 .then((response) => response.json())

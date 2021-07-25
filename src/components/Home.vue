@@ -6,6 +6,16 @@
             <HighlightItem :highlight="video" />
         </div>
     </div>
+
+    <div class="flex justify-center">
+        <button
+            type="button"
+            class="px-4 py-2 rounded bg-indigo-600 text-white mb-12"
+            @click="loadMore"
+        >
+            Load more
+        </button>
+    </div>
 </template>
 
 <script setup>
@@ -20,4 +30,8 @@ store.dispatch('getHighlights')
 const videos = computed(() => {
     return store.state.highlights.videos
 })
+
+function loadMore() {
+    store.dispatch('getHighlights')
+}
 </script>
